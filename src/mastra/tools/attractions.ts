@@ -56,7 +56,6 @@ export async function getAttractions(
     "x-rapidapi-key": apiKey!,
     "x-rapidapi-host": apiHost,
   };
-
   // Paso 1: Obtener geoId
   const geoResponse = await axios.get("https://tripadvisor-com1.p.rapidapi.com/auto-complete", {
     headers,
@@ -65,7 +64,6 @@ export async function getAttractions(
       lang: "es_ES",
     },
   });
-
   const results = geoResponse.data?.data ?? [];
   const cityItem = results.find(
     (item: any) =>
@@ -73,7 +71,6 @@ export async function getAttractions(
       item.trackingItems?.dataType === "LOCATION" &&
       item.geoId
   );
-
   const geoId = cityItem?.geoId;
   if (!geoId) {
     return [
@@ -82,7 +79,6 @@ export async function getAttractions(
       },
     ];
   }
-
   // Paso 2: Obtener atracciones
   const attractionsResponse = await axios.get(
     "https://tripadvisor-com1.p.rapidapi.com/attractions/search",
@@ -96,7 +92,6 @@ export async function getAttractions(
       },
     }
   );
-
   const attractions = attractionsResponse.data?.data?.attractions ?? [];
   if (attractions.length === 0) {
     return [
@@ -107,7 +102,7 @@ export async function getAttractions(
   }
 
   // Tomar solo las primeras 15 atracciones
-  const limitedAttractions = attractions.slice(0, 15);
+  const limitedAttractions = attractions.slice(0, 10);
 
   // Paso 3: Enriquecer cada atracción con lat/lng usando el contentId con delay de 300ms
   const detailedAttractions: Attraction[] = [];

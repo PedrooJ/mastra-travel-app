@@ -1,8 +1,9 @@
 output.txt 
 node_modules 
 dist 
-.mastra 
+.mastra
 .env.development 
 .env 
 *.db 
 *.db-* 
+src/pdf/*
