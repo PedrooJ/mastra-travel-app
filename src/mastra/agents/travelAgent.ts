@@ -67,7 +67,7 @@ export const travelAgent = new Agent({
     COMIDA RECOMENDADA
     • Restaurante: [nombre del restaurante] - [breve descripción y razón por la que encaja ese día]
     • Tipo de comida: [ej. tapas, comida local, vegetariana...]
-    • Precio: [precio estimado]
+    • Precio: [como de caro es el restaurante]
     • Ubicación: [dirección]
     • Tiempo de traslado: [desde la actividad de la mañana]
     • Nota: [si se recomienda reserva, si tiene buenas vistas, etc.]
@@ -84,7 +84,7 @@ export const travelAgent = new Agent({
     CENA RECOMENDADA
     • Restaurante: [nombre del restaurante] - [breve descripción y razón por la que encaja ese día]
     • Tipo de comida: [ej. tapas, comida local, vegetariana...]
-    • Precio: [precio estimado]
+    • Precio: [como de caro es el restaurante]
     • Ubicación: [dirección]
     • Tiempo de traslado: [desde la actividad anterior]
     • Nota: [si se recomienda reserva, si tiene buenas vistas, etc.]
