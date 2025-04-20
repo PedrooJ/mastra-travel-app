@@ -110,7 +110,7 @@ export const travelAgent = new Agent({
     - Usa siempre la herramienta "routeTool" para estimar tiempos de desplazamiento entre lugares con coordenadas.
     - Sé realista con los tiempos y evita itinerarios sobrecargados.
     - Las actividades deben estar localizadas geográficamente: prioriza sitios cercanos entre sí.
-    - No utilices emojis ni códigos markdown.
+    - No utilices emojis ni códigos markdown excepto en el formato de las secciones.
 `,
 });
 

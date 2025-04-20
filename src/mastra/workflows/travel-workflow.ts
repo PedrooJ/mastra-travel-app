@@ -242,6 +242,16 @@ const generateItineraryPdf = new Step({
         continue;
       }
 
+      if (line === '---') {
+        doc.moveDown(0.5);
+        doc.lineWidth(0.5).strokeColor('#cccccc')
+          .moveTo(doc.page.margins.left, doc.y)
+          .lineTo(doc.page.width - doc.page.margins.right, doc.y)
+          .stroke();
+        doc.moveDown(0.5);
+        continue;
+      }      
+
       if (/^\*\*(.+?)\*\*$/.test(line)) {
         const match = line.match(/^\*\*(.+?)\*\*$/);
         const content = match[1];
