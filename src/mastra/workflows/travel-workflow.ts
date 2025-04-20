@@ -200,99 +200,6 @@ const planActivities = new Step({
 /**
  * Generates a PDF with formatted itinerary text.
  */
-// const generateItineraryPdf = new Step({
-//   id: 'generate-itinerary-pdf',
-//   description: 'Genera un PDF estéticamente mejorado a partir del itinerario en texto enriquecido',
-//   execute: async ({ context }) => {
-//     const itineraryText = context?.getStepResult('plan-activities')?.itineraryText;
-
-//     if (!itineraryText) {
-//       throw new Error('No se encontró el texto del itinerario');
-//     }
-//     const PDFDocument = require('pdfkit');
-//     const fs = require('fs');
-//     const path = require('path');
-//     // Ajustes de ruta
-//     const outputDir = path.resolve(__dirname, '../../src/pdf');
-//     const fontsDir = path.resolve(__dirname, '../../src/fonts');
-
-//     if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
-//     const pdfFileName = `travel-itinerary-${Date.now()}.pdf`;
-//     const pdfFilePath = path.join(outputDir, pdfFileName);
-//     const regularFont = path.join(fontsDir, 'NotoSans-Regular.ttf');
-//     const boldFont = path.join(fontsDir, 'NotoSans-Bold.ttf');
-
-//     const doc = new PDFDocument({ margin: 50 });
-
-//     doc.registerFont('Regular', regularFont);
-//     doc.registerFont('Bold', boldFont);
-//     doc.pipe(fs.createWriteStream(pdfFilePath));
-
-//     // 🧳 Título principal
-//     doc.font('Bold').fontSize(22).fillColor('#333').text('🧳 Itinerario de Viaje Personalizado', { align: 'center' });
-//     doc.moveDown(1.5);
-
-//     const lines = itineraryText.split('\n');
-
-//     for (let rawLine of lines) {
-//       const line = rawLine.trim();
-
-//       if (line === '') {
-//         doc.moveDown(0.7);
-//         continue;
-//       }
-
-//       // Título de sección en negrita (p. ej., **HOTEL**)
-//       if (/^\*\*(.+?)\*\*$/.test(line)) {
-//         const match = line.match(/^\*\*(.+?)\*\*$/);
-//         doc.font('Bold').fontSize(14).fillColor('#000').text(match[1].toUpperCase(), { underline: true });
-//         doc.moveDown(0.4);
-//         continue;
-//       }
-
-//       // FECHAS EN AZUL DESTACADO
-//       if (/^\w+,\s\d{1,2}\sde\s\w+(?:\sde\s\d{4})?$/.test(line.toLowerCase())) {
-//         doc.font('Bold').fontSize(16).fillColor('#1a73e8').text(line.toUpperCase());
-//         doc.moveDown(0.4);
-//         continue;
-//       }
-
-//       // SEPARADOR VISUAL SUAVE
-//       if (/^_{10,}$/.test(line)) {
-//         doc.moveDown(0.3);
-//         doc.strokeColor('#cccccc').lineWidth(0.5).moveTo(doc.page.margins.left, doc.y).lineTo(doc.page.width - doc.page.margins.right, doc.y).stroke();
-//         doc.moveDown(0.8);
-//         continue;
-//       }
-
-//       // Viñetas
-//       if (line.startsWith('• ') || line.startsWith('- ')) {
-//         const content = line.slice(2);
-//         doc.font('Regular').fontSize(11).fillColor('#333').text('• ' + content, { indent: 20 });
-//         continue;
-//       }
-
-//       // Inline bold: **texto**
-//       const parts = line.split(/(\*\*.+?\*\*)/);
-//       for (const part of parts) {
-//         if (/^\*\*(.+?)\*\*$/.test(part)) {
-//           doc.font('Bold').text(part.replace(/\*\*/g, ''), { continued: true });
-//         } else {
-//           doc.font('Regular').text(part, { continued: true });
-//         }
-//       }
-//       doc.text('', { continued: false });
-//     }
-
-//     doc.end();
-//     console.log("Itinerario PDF embellecido generado en: ", pdfFilePath);
-
-//     return {
-//       message: 'PDF con formato mejorado generado exitosamente',
-//       pdfPath: pdfFilePath,
-//     };
-//   },
-// });
 const generateItineraryPdf = new Step({
   id: 'generate-itinerary-pdf',
   description: 'Genera un PDF estéticamente mejorado a partir del itinerario en texto enriquecido',
@@ -335,48 +242,42 @@ const generateItineraryPdf = new Step({
         continue;
       }
 
-      // Sección principal (Ej: **HOTEL**)
       if (/^\*\*(.+?)\*\*$/.test(line)) {
         const match = line.match(/^\*\*(.+?)\*\*$/);
-        doc.moveDown(0.8);
-        doc.lineWidth(1).strokeColor('#1a73e8')
-          .moveTo(doc.page.margins.left, doc.y)
-          .lineTo(doc.page.width - doc.page.margins.right, doc.y)
-          .stroke();
-        doc.moveDown(0.2);
-        doc.font('Bold').fontSize(14).fillColor('#000000').text(match[1].toUpperCase());
-        doc.moveDown(0.3);
-        continue;
-      }
-
-      // Fechas destacadas
-      if (/^\w+,\s\d{1,2}\sde\s\w+(?:\sde\s\d{4})?$/.test(line.toLowerCase())) {
-        doc.moveDown(0.6);
-        doc.rect(doc.x, doc.y, doc.page.width - doc.page.margins.left - doc.page.margins.right, 22)
-          .fillAndStroke('#e3f2fd', '#1a73e8');
-        doc.fillColor('#1a73e8').font('Bold').fontSize(13)
-          .text(line.toUpperCase(), doc.x + 10, doc.y - 15);
-        doc.moveDown(1.2);
-        continue;
-      }
-
-      // Separador visual
-      if (/^_{10,}$/.test(line)) {
+        const content = match[1];
+        const isDia = content.trim().toUpperCase().startsWith("DIA");
+      
         doc.moveDown(0.4);
-        doc.strokeColor('#cccccc').lineWidth(0.5)
-          .moveTo(doc.page.margins.left, doc.y)
-          .lineTo(doc.page.width - doc.page.margins.right, doc.y)
-          .stroke();
-        doc.moveDown(0.8);
+      
+        if (isDia) {
+          doc.font('Bold').fontSize(14).fillColor('#1a73e8').text(content.toUpperCase());
+          doc.moveDown(0.2);
+          doc.lineWidth(1).strokeColor('#1a73e8')
+            .moveTo(doc.page.margins.left, doc.y)
+            .lineTo(doc.page.width - doc.page.margins.right, doc.y)
+            .stroke();
+        } else {
+          doc.font('Bold').fontSize(12).fillColor('#000000').text(content.toUpperCase());
+          doc.moveDown(0.3);
+        }
         continue;
       }
 
       // Viñetas
       if (line.startsWith('• ') || line.startsWith('- ')) {
-        const content = line.slice(2);
-        doc.font('Regular').fontSize(11).fillColor('#2c3e50').text('• ' + content, { indent: 20 });
+        const content = line.slice(2).trim();
+        
+        if (content.includes(':')) {
+          const [beforeColon, afterColon] = content.split(/:(.*)/); // divide solo en la primera aparición de :
+          doc.font('Bold').fontSize(10).fillColor('#2c3e50').text('• ' + beforeColon + ':', { continued: true, indent: 20 });
+          doc.font('Regular').fontSize(10).fillColor('#2c3e50').text(' ' + afterColon.trim());
+        } else {
+          doc.font('Regular').fontSize(10).fillColor('#2c3e50').text('• ' + content, { indent: 20 });
+        }
+      
         continue;
       }
+      
 
       // Texto enriquecido: negrita en línea
       const parts = line.split(/(\*\*.+?\*\*)/);
@@ -400,7 +301,6 @@ const generateItineraryPdf = new Step({
     };
   },
 });
-
 
 
 /**

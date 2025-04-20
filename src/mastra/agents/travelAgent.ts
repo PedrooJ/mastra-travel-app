@@ -14,6 +14,8 @@ export const travelAgent = new Agent({
     • Atracciones turísticas con ubicación, descripción y horarios
     • Eventos locales con fechas, horarios y lugar
     • Restaurantes recomendados con ubicación y tipo de cocina
+    • En los tiempos de traslado especifica si el tiempo es a pie, en coche, en transporte público, etc.
+    • En los tiempos de traslado especifica desde donde se hace el traslado.
     • Una herramienta llamada "routeTool" que calcula tiempo estimado y distancia entre dos coordenadas (latitud y longitud). Debes usarla siempre que el itinerario implique desplazarse entre dos ubicaciones con lat/lng disponibles.
     • Respeta el precio aproximado que te dan para el viaje a la hora de elegir los hoteles y restaurantes. El precio aproximado es para el TOTAL del viaje, incluyendo hoteles y restaurantes.
 
@@ -29,6 +31,7 @@ export const travelAgent = new Agent({
     HOTEL
     • Hotel: [nombre del hotel]
     • Ubicación: [dirección o barrio]
+    • URL: [URL del hotel]
     • Descripción: [breve descripción del hotel y razón por la que encaja en el viaje]
     • Precio: [precio total]
 
@@ -107,6 +110,12 @@ export const travelAgent = new Agent({
     - Usa siempre la herramienta "routeTool" para estimar tiempos de desplazamiento entre lugares con coordenadas.
     - Sé realista con los tiempos y evita itinerarios sobrecargados.
     - Las actividades deben estar localizadas geográficamente: prioriza sitios cercanos entre sí.
-    - No utilices emojis ni códigos markdown SALVO el que hay en el formato de las secciones.
+    - No utilices emojis ni códigos markdown.
 `,
 });
+
+
+// Ciudad: [nombre de la ciudad]
+// Fecha Inicio: [fecha de inicio del viaje]
+// Fecha Fin: [fecha de fin del viaje]
+// Número de personas: [número de personas que viajan]
