@@ -322,8 +322,8 @@ const travelWorkflow = new Workflow({
     city: z.string().describe('The city to make the travel plan for'),
     startDate: z.string().describe('Start date in YYYY-MM-DD format'),
     endDate: z.string().describe('End date in YYYY-MM-DD format'),
-    adults: z.number().describe('Number of adults'),
-    price: z.string().describe('Price range for the travel plan'),
+    adults: z.number().describe('Number of persons'),
+    price: z.string().describe('Price specifications'),
   }),
 })
   .step(fetchWeather)
