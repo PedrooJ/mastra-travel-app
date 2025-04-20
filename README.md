@@ -9,8 +9,8 @@ Aplicación de planificación de viajes que ayuda a los usuarios a crear itinera
 - **Recomendaciones de Atracciones**: Descubre puntos turísticos populares y lugares de interés
 - **Recomendaciones de Hoteles**: Encuentra alojamientos disponibles según tus preferencias
 - **Sugerencias de Restaurantes**: Obtén recomendaciones de los mejores lugares para comer
-- **Itinerario con IA**: Genera planes de viaje personalizados usando un agente que combina chatgpt con una tool de rutas (routeTool) que puede usar para descubrir la distancia entre dos puntos usando las latitudes y longitudes que incluyen.
-- **Exportación a PDF**: Crea itinerarios en PDF con formato atractivo
+- **Itinerario con IA**: Genera planes de viaje personalizados con tiempos exactos entre puntos
+- **Exportación a PDF**: Descarga tu itinerario en PDF con formato atractivo
 
 
 ## Comenzando
@@ -62,7 +62,7 @@ La aplicación proporciona un sistema basado en flujos de trabajo para crear pla
     - Recomendaciones de restaurantes
     - Recomendaciones de hoteles
     - Sugerencias de atracciones turísticas
-    - Generación de itinerario con un agente que combina chatgpt con una tool que obtiene las rutas entre dos puntos
+    - Generación de itinerario con un agente que combina chatgpt con una tool que obtiene las rutas entre dos puntos (routeTool), el agente utiliza esta tool únicamente con los puntos que escoge para el itinerario, de modo que pueda dar el tiempo exacto que tardas en ir de un punto a otro.
     - Exportación a PDF
 
 ## Estructura del Proyecto
@@ -96,8 +96,9 @@ La aplicación se integra con varias APIs externas:
 Solo se necesita cambiar "key" por tu propia key para que funcione todo.
 
 - La aplicación de momento solo funciona con itinerarios de 2 o 3 días. Si pones más días chatgpt solo escribirá los 2 primeros días de itinerario (quizá porque la respuesta de chatgpt sería muy larga de otro modo?). Y con 1 solo día no se usaría la api de hoteles.
+  
 - El step de las atracciones turísticas tarda un poco por las limitaciones de solicitudes que tiene la api de TripAdvisor.
-Tengo que hacer una solicitud por cada una de las atracciones obtenidas para obtener su latitud y longitud, para que luego el agente pueda utilizar estos datos con routeTool.
+Tengo que hacer una solicitud por cada una de las atracciones obtenidas para obtener su latitud y longitud, para que luego el agente pueda utilizar estos datos con routeTool, y esto relentiza la app.
 
 
 
